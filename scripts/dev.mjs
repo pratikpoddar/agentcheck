@@ -7,11 +7,12 @@ import { fileURLToPath } from "node:url";
 import check from "../netlify/functions/check.mjs";
 import mcp from "../netlify/functions/mcp.mjs";
 import directory from "../netlify/functions/directory.mjs";
+import badge from "../netlify/functions/badge.mjs";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "site");
 const port = Number(process.argv[process.argv.indexOf("--port") + 1]) || 8787;
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".md": "text/markdown; charset=utf-8" };
-const ROUTES = { "/api/check": check, "/mcp": mcp, "/directory.json": directory };
+const ROUTES = { "/api/check": check, "/mcp": mcp, "/directory.json": directory, "/badge": badge };
 
 createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${port}`);
@@ -28,6 +29,7 @@ createServer(async (req, res) => {
   let file = path.normalize(path.join(root, decodeURIComponent(url.pathname)));
   if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
   try {
+    if (!path.extname(file) && !(await stat(file).catch(() => null))) file += ".html";
     if ((await stat(file)).isDirectory()) file = path.join(file, "index.html");
     const data = await readFile(file);
     const headers = { "Content-Type": TYPES[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-store" };

@@ -199,6 +199,19 @@ function renderReport(state) {
       n.findings.map(findingRow));
     box.append(g);
   }
+  if (r.summary.verdict === "not-found" || r.summary.verdict === "fails") {
+    box.append(el("p", { class: "note" }, r.summary.verdict === "not-found" ? "Want to make it agentic? " : "Starting over is sometimes faster: ",
+      el("a", { href: "./start", text: "generate conforming files for this site" }), " and check them before you upload."));
+  }
+  if (r.summary.verdict !== "not-found") {
+    const target = r.networks?.[0]?.url || state.checkedUrl;
+    const enc = encodeURIComponent(target);
+    const md = `[![AgentCheck](${location.origin}/badge?url=${enc})](${location.origin}/?url=${enc})`;
+    const copy = el("button", { class: "ghost", type: "button", text: "Copy badge Markdown" });
+    copy.addEventListener("click", async () => { try { await navigator.clipboard.writeText(md); copy.textContent = "Copied"; } catch { /* ignore */ } });
+    box.append(el("div", { class: "badge-box" }, el("img", { src: `/badge?url=${enc}`, alt: "AgentCheck badge", loading: "lazy" }), copy,
+      el("span", { class: "muted small", text: "Live badge for your README or footer, re-checked hourly." })));
+  }
   const actions = el("div", { class: "report-actions" },
     el("button", { class: "ghost", type: "button", id: "copy-json", text: "Copy JSON report" }),
     el("a", { class: "ghost-link", href: `${location.pathname}?url=${encodeURIComponent(state.checkedUrl)}`, text: "Link to this report" }));

@@ -147,3 +147,26 @@ body > dialog button { margin-right: 8px; }
   .assistant-panels { grid-template-columns: 1fr; }
   .checkbox { flex-direction: column; }
 }
+
+/* Starter */
+.starter { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: grid; gap: 16px; margin-bottom: 24px; }
+.starter label { display: grid; gap: 6px; font-weight: 600; }
+.starter input, .starter textarea, .starter select { font: 0.98rem var(--sans); padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fffdf9; color: var(--ink); width: 100%; }
+.starter input[type="color"] { padding: 2px; height: 42px; }
+.starter textarea { font-family: var(--mono); font-size: 0.9rem; resize: vertical; }
+.starter input:focus, .starter textarea:focus, .starter select:focus { outline: 2px solid rgba(21, 94, 99, 0.35); border-color: var(--teal-2); }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.more summary { cursor: pointer; color: var(--teal-2); font-weight: 600; margin-bottom: 12px; }
+.more[open] { display: grid; gap: 16px; }
+.starter-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.starter-actions button[type="submit"], .primary { background: var(--teal); color: #fff; border: 0; border-radius: 10px; padding: 12px 26px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+.primary:hover, .starter-actions button[type="submit"]:hover { background: var(--teal-2); }
+.primary:disabled { opacity: 0.6; cursor: wait; }
+.file-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.file-tabs [aria-selected="true"] { background: var(--teal); color: #fff; border-color: var(--teal); }
+.ghosted { opacity: 0.6; cursor: default; }
+.file-view { max-height: 420px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.82rem; }
+.next-steps li { margin: 4px 0; }
+.badge-box { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.badge-box img { height: 20px; }
+.report pre { white-space: pre-wrap; overflow-wrap: anywhere; }

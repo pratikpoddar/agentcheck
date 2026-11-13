@@ -1,9 +1,10 @@
 // AgentCheck MCP server (streamable HTTP, stateless, JSON responses, CORS open).
-// Tools: check_site, explain_rule, cors_fix. Any agent network can list
+// Tools: check_site, explain_rule, cors_fix, agentify_starter. Any agent network can list
 // {"url": "https://agentcheck.netlify.app/mcp", "tools": ["check_site"]} in its tools.
 import { RULES, SPEC_URL, VERSION } from "../../site/lib/checker.js";
 import { corsFix, HOSTS } from "../../site/lib/fixes.js";
 import { CORS, json, runCheck } from "./_shared.mjs";
+import { generate } from "../../site/lib/starter.js";
 
 const PROTOCOL = "2025-06-18";
 
@@ -33,6 +34,25 @@ const TOOLS = [
     description: "Return the exact config that lets other agent sites read a site's agent files, for one hosting provider.",
     inputSchema: { type: "object", properties: { host: { type: "string", enum: HOSTS }, folder: { type: "string", description: "Folder holding agent-manifest.json. Default /." } }, required: ["host"] },
   },
+  {
+    name: "agentify_starter",
+    title: "Generate open agentic website files",
+    description: "Generate the files that make a website an open agentic website under the MVP spec: agent-manifest.json, a two-agent network (front desk + facts agent) as JSON and HOCON, links.json, a CORS rule for the host and a chat page. The reference runtime folder is not included; copy it from https://agentcheck.netlify.app/start or the challenge repo.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        site_name: { type: "string" },
+        site_url: { type: "string", description: "Public https URL of the folder the files will be uploaded to." },
+        purpose: { type: "string", description: "One sentence: what the assistant helps visitors with." },
+        facts: { type: "string", description: "The facts the assistant may answer from (hours, prices, services, FAQs)." },
+        host: { type: "string", enum: HOSTS },
+        contact: { type: "string", description: "Optional link or phone for what the assistant cannot do." },
+        sample_queries: { type: "array", items: { type: "string" } },
+        partners: { type: "array", items: { type: "string" }, description: "Optional partner network URLs." },
+      },
+      required: ["site_name", "site_url", "purpose", "facts"],
+    },
+  },
 ];
 
 function rpcResult(id, result) { return { jsonrpc: "2.0", id, result }; }
@@ -54,6 +74,14 @@ async function callTool(name, args = {}) {
   if (name === "cors_fix") {
     const f = corsFix(args.host, args.folder);
     return text(f, Boolean(f.error));
+  }
+  if (name === "agentify_starter") {
+    const r = generate({
+      siteName: args.site_name, siteUrl: args.site_url, purpose: args.purpose, facts: args.facts, host: args.host,
+      contact: args.contact, samples: (args.sample_queries || []).join("\n"), partners: (args.partners || []).join("\n"),
+    });
+    if (!r.ok) return text({ ok: false, errors: r.errors }, true);
+    return text({ ok: true, network_url: r.networkUrl, upload_to: r.folderUrl, files: r.files, runtime: "Copy the runtime/ folder from the zip at https://agentcheck.netlify.app/start, then check the live site with check_site." });
   }
   return null;
 }

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentify your site · AgentCheck starter</title>
+  <meta name="description" content="Answer a few questions and download the files that make your website an open agentic website: agent-manifest.json, a two-agent network, CORS for your host and a chat page. Checked by AgentCheck before you download.">
+  <meta property="og:title" content="Agentify your site with AgentCheck">
+  <meta property="og:description" content="Five questions to a conforming open agentic website, checked before you download.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="start.js"></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./"><span class="mark" aria-hidden="true">✓</span> AgentCheck</a>
+    <nav>
+      <a href="./#check">Check a site</a>
+      <a href="./start" aria-current="page">Agentify your site</a>
+      <a href="./#tools">CLI · Action · MCP</a>
+      <a href="./#directory">Directory</a>
+      <a href="https://github.com/pratikpoddar/agentcheck" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Starter · MVP spec 0.2</p>
+      <h1>Make your site an open agentic website.</h1>
+      <p class="lede">Answer a few questions. AgentCheck writes your agent manifest, a two-agent network, the CORS rule for your host and a chat page, then checks them against every rule before you download. Upload the folder and other sites' agents can call yours.</p>
+    </section>
+
+    <form id="starter" class="starter" autocomplete="off" novalidate>
+      <div class="field-row">
+        <label>Site name<input name="siteName" required placeholder="Sunrise Bakery"></label>
+        <label>Public URL of the folder you'll upload to<input name="siteUrl" required inputmode="url" placeholder="https://sunrise-bakery.com/"></label>
+      </div>
+      <label>What does the assistant help visitors with? <span class="muted small">One sentence.</span>
+        <input name="purpose" required placeholder="Answers questions about our breads, cakes, opening hours and custom orders."></label>
+      <label>Facts the assistant may use <span class="muted small">Hours, prices, services, policies, FAQs. It answers only from these.</span>
+        <textarea name="facts" rows="7" required placeholder="Open 7am to 7pm, every day.&#10;Sourdough loaf: Rs 180. Croissant: Rs 90.&#10;Custom cakes need 48 hours' notice; order by phone on +91 ...&#10;We deliver within 5 km."></textarea></label>
+      <div class="field-row">
+        <label>Where is the site hosted?
+          <select name="host">
+            <option value="netlify">Netlify</option>
+            <option value="cloudflare-pages">Cloudflare Pages</option>
+            <option value="vercel">Vercel</option>
+            <option value="github-pages">GitHub Pages</option>
+            <option value="firebase">Firebase Hosting</option>
+            <option value="wordpress">WordPress</option>
+            <option value="apache">Apache</option>
+            <option value="nginx">nginx</option>
+            <option value="s3">Amazon S3</option>
+            <option value="express">Node / Express</option>
+          </select></label>
+        <label>Where visitors go for the rest <span class="muted small">Optional link or phone.</span><input name="contact" placeholder="https://sunrise-bakery.com/contact"></label>
+      </div>
+      <details class="more">
+        <summary>More options</summary>
+        <label>What it can't do <span class="muted small">One per line.</span><textarea name="cannot" rows="3" placeholder="take payments&#10;change an order"></textarea></label>
+        <label>Sample questions <span class="muted small">One per line. Other agents read these.</span><textarea name="samples" rows="3" placeholder="Do you have eggless cakes?&#10;What time do you close on Sunday?"></textarea></label>
+        <label>Partner networks this assistant may ask <span class="muted small">Network URLs, one per line.</span><textarea name="partners" rows="2" placeholder="https://partner.example/their_network"></textarea></label>
+        <div class="field-row">
+          <label>Network name <span class="muted small">Defaults from the site name.</span><input name="networkName" placeholder="sunrise_bakery"></label>
+          <label>Brand colour<input name="color" type="color" value="#0f3d3e"></label>
+        </div>
+      </details>
+      <div class="starter-actions">
+        <button type="submit">Generate and check</button>
+        <button type="button" class="chip" id="fill-example">Fill an example</button>
+      </div>
+      <p class="fine">Nothing leaves your browser. The check runs here, on the files as they'll be served.</p>
+    </form>
+
+    <section id="result" class="report" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <p>Files follow the <a href="https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md" target="_blank" rel="noopener">Worldwide Agentic Web MVP spec</a> and include the reference browser runtime (Apache-2.0, unchanged).</p>
+    <p>Built by Tinkerer (Pratik Poddar) for the Open Agentic Web Challenge.</p>
+  </footer>
+</body>
+</html>

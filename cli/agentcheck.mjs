@@ -9,6 +9,7 @@ import { checkSite, compact, VERSION } from "../site/lib/checker.js";
 
 const USAGE = `AgentCheck ${VERSION}
 Usage: agentcheck <site, network, or manifest URL> [options]
+       agentcheck init [folder]   Generate a conforming open agentic website folder
 
 Options:
   --origin <url>   Check CORS as seen from this caller origin (default: any site)
@@ -49,6 +50,10 @@ function printFinding(f) {
 }
 
 async function main() {
+  if (process.argv[2] === "init") {
+    const { init } = await import("./init.mjs");
+    return init(process.argv.slice(3));
+  }
   let o;
   try {
     o = parse(process.argv.slice(2));

@@ -18,6 +18,7 @@
     <a class="brand" href="./"><span class="mark" aria-hidden="true">✓</span> AgentCheck</a>
     <nav>
       <a href="#check">Check</a>
+      <a href="./start">Agentify your site</a>
       <a href="#assistant">Ask the agent</a>
       <a href="#tools">CLI · Action · MCP</a>
       <a href="#directory">Directory</a>
@@ -40,7 +41,7 @@
         <button type="button" class="chip" data-example="https://agentcheck.netlify.app/agentcheck">AgentCheck itself</button>
         <button type="button" class="chip" data-example="https://example.com">A plain website</button>
       </p>
-      <p class="fine">No key needed for the check. It runs in your browser and only reads public files.</p>
+      <p class="fine">No key needed for the check. It runs in your browser and only reads public files. Not agentic yet? <a href="./start">Generate conforming files for your site</a>.</p>
     </section>
 
     <section id="report" class="report" aria-live="polite"></section>
@@ -87,8 +88,19 @@
           <pre><code>"tools": ["https://agentcheck.netlify.app/agentcheck"]</code></pre>
         </article>
         <article>
+          <h3>Live badge</h3>
+          <p>Show callers your site conforms. The badge re-checks your site every hour.</p>
+          <pre><code>[![AgentCheck](https://agentcheck.netlify.app/badge?url=YOUR_NETWORK_URL)](https://agentcheck.netlify.app/?url=YOUR_NETWORK_URL)</code></pre>
+        </article>
+        <article>
+          <h3>Starter</h3>
+          <p>Five questions to a conforming manifest, two-agent network, CORS rule and chat page, checked before you download.</p>
+          <pre><code>npx github:pratikpoddar/agentcheck init</code></pre>
+          <p><a href="./start">Open the starter</a></p>
+        </article>
+        <article>
           <h3>MCP server</h3>
-          <p>Streamable HTTP, CORS open, no key. Tools: <code>check_site</code>, <code>explain_rule</code>, <code>cors_fix</code>.</p>
+          <p>Streamable HTTP, CORS open, no key. Tools: <code>check_site</code>, <code>explain_rule</code>, <code>cors_fix</code>, <code>agentify_starter</code>.</p>
           <pre><code>{"url": "https://agentcheck.netlify.app/mcp",
  "tools": ["check_site"]}</code></pre>
         </article>

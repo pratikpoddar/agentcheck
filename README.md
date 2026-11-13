@@ -1,5 +1,7 @@
 # AgentCheck
 
+[![AgentCheck](https://agentcheck.netlify.app/badge?url=https%3A%2F%2Fagentcheck.netlify.app%2Fagentcheck)](https://agentcheck.netlify.app/?url=https%3A%2F%2Fagentcheck.netlify.app%2Fagentcheck)
+
 **Will other agents be able to call your site?** AgentCheck is an open agentic website that checks *other* open agentic websites against the [Worldwide Agentic Web MVP spec](https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md) (Profile 0.2), explains each failure in plain English, and gives the exact fix for your host.
 
 Live: **https://agentcheck.netlify.app** · Network URL: `https://agentcheck.netlify.app/agentcheck` · MCP: `https://agentcheck.netlify.app/mcp`
@@ -20,7 +22,7 @@ Built for the [Open Agentic Web Challenge](https://cognizant-agenticweb.devpost.
 
 It reads only public files, the way a calling browser does, and reuses the reference browser runtime's HOCON parser and validator (copied from the challenge repo), so a network that passes here is one the reference runtime loads.
 
-## Four ways to use it
+## Six ways to use it
 
 **1. The site.** Paste a URL at https://agentcheck.netlify.app. The check runs in your browser with no key. If your browser cannot read the files at all, AgentCheck's server probe reads the headers and tells you whether it is CORS or a missing file.
 
@@ -42,7 +44,7 @@ and add `https://agentcheck.netlify.app` to `allowed_peers`. Run on another site
 **3. MCP server.** Streamable HTTP, stateless, CORS open, no key.
 
 ```json
-{ "url": "https://agentcheck.netlify.app/mcp", "tools": ["check_site", "explain_rule", "cors_fix"] }
+{ "url": "https://agentcheck.netlify.app/mcp", "tools": ["check_site", "explain_rule", "cors_fix", "agentify_starter"] }
 ```
 
 ```bash
@@ -64,6 +66,18 @@ Exit code 0 when every MUST rule passes, 1 when one fails (or any warning with `
 - uses: pratikpoddar/agentcheck@v0
   with:
     url: https://your-site.example/your_network
+```
+
+**5. Agentify starter.** Not agentic yet? Answer a few questions at [agentcheck.netlify.app/start](https://agentcheck.netlify.app/start) and download a folder that makes your site an open agentic website: `agent-manifest.json`, a two-agent network (front desk + a facts agent that answers only from what you give it) as JSON and HOCON, `links.json`, the CORS rule for your host, a chat page and the reference runtime. AgentCheck checks the files exactly as they will be served before you download them. Same thing from the terminal, or from any agent through the MCP tool `agentify_starter`:
+
+```
+npx github:pratikpoddar/agentcheck init my-agentic-site
+```
+
+**6. Live badge.** Show callers your site conforms. The badge re-checks the site at most hourly.
+
+```
+[![AgentCheck](https://agentcheck.netlify.app/badge?url=https%3A%2F%2Fyour-site.example%2Fyour_network)](https://agentcheck.netlify.app/?url=https%3A%2F%2Fyour-site.example%2Fyour_network)
 ```
 
 ## Directory
@@ -90,7 +104,9 @@ npm run dev              # http://localhost:8787 with the API, MCP and directory
 | `site/app.js`, `site-actions.js`, `site.js` | Page, the `website_*` actions, and the runtime mount. |
 | `site/runtime/` | Reference browser runtime, unchanged (see NOTICE). |
 | `netlify/functions/` | `/api/check` server probe, `/mcp`, `/directory.json`. |
-| `cli/agentcheck.mjs`, `action.yml` | CLI and GitHub Action. |
+| `site/lib/starter.js`, `site/start.html` | Agentify starter: generates and pre-checks a conforming site folder. |
+| `site/lib/badge.js`, `netlify/functions/badge.mjs` | Live SVG badge. |
+| `cli/agentcheck.mjs`, `cli/init.mjs`, `action.yml` | CLI and GitHub Action. |
 
 ## Limits
 
