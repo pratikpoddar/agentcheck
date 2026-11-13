@@ -1,0 +1,28 @@
+name: Add my agentic website to the directory
+description: List your open agentic website in AgentCheck's directory.
+title: "Add site: "
+labels: ["add-site"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Site name
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Site URL
+      placeholder: https://your-site.example/
+    validations:
+      required: true
+  - type: input
+    id: network_url
+    attributes:
+      label: Network URL (folder with agent-manifest.json + network name)
+      placeholder: https://your-site.example/your_network
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: The directory lists every site with its live verdict, passing or not. Run a check at https://agentcheck.netlify.app first.

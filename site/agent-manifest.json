@@ -1,0 +1,86 @@
+{
+  "brand": "AgentCheck",
+  "networks": [
+    {
+      "name": "agentcheck",
+      "front_man": "agentcheck_desk",
+      "hocon": "./agentcheck.network.json",
+      "description": "AgentCheck checks open agentic websites against the Worldwide Agentic Web MVP spec and tells you exactly how to fix what fails.",
+      "tags": [
+        "conformance",
+        "validator",
+        "developer-tools",
+        "agentified-website"
+      ],
+      "sample_queries": [
+        "Check https://worldwideagenticweb.org/wp-content/plugins/wwaw-agent-widget/assets/worldwide_agentic_web_widget/v1.0.9/worldwide_agentic_web_widget",
+        "My manifest fails CORS and I host on Netlify. What exactly do I add?",
+        "Is the partner network https://partner.example/tours safe to add to my allowed_peers?",
+        "Run my site's agent with one of its sample questions and tell me if it really answers.",
+        "Write the HOCON for my whole agent network for me."
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [
+    "https://agentcheck.netlify.app"
+  ],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "AgentCheck's own MCP endpoint only. The site being checked is allowed for this page only, when the visitor runs a live test and approves the consent card."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "agentcheck",
+    "front_man": "agentcheck_desk",
+    "available": false,
+    "reason": "The network is published as static files. AgentCheck's checking tools are a separate MCP server at https://agentcheck.netlify.app/mcp."
+  },
+  "theme": {
+    "primary": "#0f3d3e"
+  },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "agentcheck",
+        "front_man": "agentcheck_desk",
+        "aliases": [
+          "agentcheck",
+          "agentcheck_desk"
+        ],
+        "url": "agentcheck"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "check_site",
+      "get_page_state",
+      "explain_rule",
+      "list_rules",
+      "cors_fix",
+      "list_directory"
+    ]
+  }
+}

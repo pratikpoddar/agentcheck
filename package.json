@@ -1,0 +1,20 @@
+{
+  "name": "agentcheck",
+  "version": "0.1.0",
+  "description": "Conformance checker for the open agentic web: checks agent-manifest.json, network definitions, CORS and peer policy against the Worldwide Agentic Web MVP spec.",
+  "type": "module",
+  "bin": { "agentcheck": "cli/agentcheck.mjs" },
+  "files": ["cli/", "site/lib/", "site/runtime/", "action.yml", "README.md", "LICENSE"],
+  "scripts": {
+    "check": "node cli/agentcheck.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "build:network": "node scripts/build_network.mjs site/agentcheck.hocon --manifest site/agent-manifest.json",
+    "dev": "node scripts/dev.mjs --port 8787"
+  },
+  "engines": { "node": ">=22" },
+  "keywords": ["agentic-web", "agents", "mcp", "conformance", "validator", "nsdeploy", "neuro-san", "hocon"],
+  "author": "Tinkerer (Pratik Poddar)",
+  "license": "Apache-2.0",
+  "repository": { "type": "git", "url": "https://github.com/pratikpoddar/agentcheck.git" },
+  "homepage": "https://agentcheck.netlify.app"
+}

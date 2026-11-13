@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentCheck · Conformance checker for the open agentic web</title>
+  <meta name="description" content="Paste any agentic website URL. AgentCheck reads its agent-manifest.json and network the way a calling browser does, checks them against the Worldwide Agentic Web MVP spec, and gives you the exact fix for each failure.">
+  <meta property="og:title" content="AgentCheck">
+  <meta property="og:description" content="Is your site ready for the open agentic web? Check it against the MVP spec in seconds.">
+  <meta property="og:image" content="https://agentcheck.netlify.app/og.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./"><span class="mark" aria-hidden="true">✓</span> AgentCheck</a>
+    <nav>
+      <a href="#check">Check</a>
+      <a href="#assistant">Ask the agent</a>
+      <a href="#tools">CLI · Action · MCP</a>
+      <a href="#directory">Directory</a>
+      <a href="https://github.com/pratikpoddar/agentcheck" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="check">
+      <p class="eyebrow">For the Worldwide Agentic Web · MVP spec 0.2</p>
+      <h1>Will other agents be able to call your site?</h1>
+      <p class="lede">Paste an agentic website URL. AgentCheck reads its manifest, network and headers exactly the way a calling browser does, checks 34 rules from the spec, and tells you what to fix, with the snippet to paste.</p>
+      <form id="check-form" class="checkbox" autocomplete="off">
+        <label for="url" class="sr-only">Site, network or manifest URL</label>
+        <input id="url" name="url" type="text" inputmode="url" placeholder="https://your-site.example/  or  https://your-site.example/your_network" required>
+        <button type="submit">Check</button>
+      </form>
+      <p class="examples">Try:
+        <button type="button" class="chip" data-example="https://worldwideagenticweb.org/wp-content/plugins/wwaw-agent-widget/assets/worldwide_agentic_web_widget/v1.0.9/worldwide_agentic_web_widget">The challenge's own agent</button>
+        <button type="button" class="chip" data-example="https://agentcheck.netlify.app/agentcheck">AgentCheck itself</button>
+        <button type="button" class="chip" data-example="https://example.com">A plain website</button>
+      </p>
+      <p class="fine">No key needed for the check. It runs in your browser and only reads public files.</p>
+    </section>
+
+    <section id="report" class="report" aria-live="polite"></section>
+
+    <section class="how">
+      <div><span class="step">1</span><h3>Finds the manifest</h3><p>From a site, network or manifest URL, it locates <code>agent-manifest.json</code> and the exact network you named, the way the spec's peer protocol does.</p></div>
+      <div><span class="step">2</span><h3>Checks what callers see</h3><p>CORS, HTTPS, router and peer policy, the data-only network, front agent, schemas, secrets, links and the action bridge, using the reference runtime's own parser and validator.</p></div>
+      <div><span class="step">3</span><h3>Explains and test-drives</h3><p>Its agent network turns failures into a fix plan for your host, and can load your network as a peer and run it here, on your key, after you approve.</p></div>
+    </section>
+
+    <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
+      <h2 id="assistant-heading">Ask AgentCheck's agents</h2>
+      <p>Two agents run in your browser: a desk agent that checks and explains, and a fix writer that turns failures into steps for your host. Ask for a live test and they load the checked site's own network as a peer.</p>
+      <p class="assistant-note">Your messages and the reports go to the LLM provider you choose in the settings below, with your key, which stays in this browser. Before any other site is contacted, you approve a card.</p>
+      <p id="assistant-status" role="status">Connecting the assistant… If this message stays, the assistant could not load. The checker above still works.</p>
+      <div id="agent-app">
+        <div data-ns-slot="header"></div>
+        <div class="assistant-panels">
+          <div data-ns-slot="chat"></div>
+          <div data-ns-slot="agents"></div>
+        </div>
+        <div data-ns-slot="settings"></div>
+      </div>
+    </section>
+
+    <section id="tools" class="tools">
+      <h2>Use it where you build</h2>
+      <div class="grid">
+        <article>
+          <h3>Command line</h3>
+          <p>Same checker, from Node 22+. Exits 1 when a MUST rule fails.</p>
+          <pre><code>npx github:pratikpoddar/agentcheck https://your-site.example/your_network</code></pre>
+        </article>
+        <article>
+          <h3>GitHub Action</h3>
+          <p>Fail a deploy that would break your callers.</p>
+          <pre><code>- uses: pratikpoddar/agentcheck@v0
+  with:
+    url: https://your-site.example/your_network</code></pre>
+        </article>
+        <article>
+          <h3>From your agent network</h3>
+          <p>Call AgentCheck before you link a partner. Add the network URL to an agent's <code>tools</code> and the origin to <code>allowed_peers</code>.</p>
+          <pre><code>"tools": ["https://agentcheck.netlify.app/agentcheck"]</code></pre>
+        </article>
+        <article>
+          <h3>MCP server</h3>
+          <p>Streamable HTTP, CORS open, no key. Tools: <code>check_site</code>, <code>explain_rule</code>, <code>cors_fix</code>.</p>
+          <pre><code>{"url": "https://agentcheck.netlify.app/mcp",
+ "tools": ["check_site"]}</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="directory" class="directory">
+      <h2>Open agentic websites</h2>
+      <p>Sites from the challenge's public list and ones builders added, re-checked daily by the server probe. <a href="https://github.com/pratikpoddar/agentcheck/issues/new?template=add-site.yml" target="_blank" rel="noopener">Add your site</a>.</p>
+      <p id="directory-meta" class="muted small"></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Site</th><th>Verdict</th><th>Findings</th><th></th></tr></thead>
+          <tbody id="directory-body"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>AgentCheck is open source (Apache-2.0) and checks against the <a href="https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md" target="_blank" rel="noopener">Worldwide Agentic Web MVP spec</a>. It reports what published files and headers show; it is not a certification.</p>
+    <p>Built by Tinkerer (Pratik Poddar) for the Open Agentic Web Challenge. Agent files: <a href="agent-manifest.json">agent-manifest.json</a> · <a href="agentcheck.network.json">agentcheck.network.json</a></p>
+  </footer>
+</body>
+</html>

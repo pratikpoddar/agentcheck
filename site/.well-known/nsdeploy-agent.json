@@ -1,0 +1,7 @@
+{
+  "protocol": "nsdeploy-agent-mcp/v1",
+  "network": "agentcheck",
+  "front_man": "agentcheck_desk",
+  "available": false,
+  "reason": "The network is published as static files. AgentCheck's checking tools are a separate MCP server at https://agentcheck.netlify.app/mcp."
+}

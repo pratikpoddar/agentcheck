@@ -1,0 +1,30 @@
+name: AgentCheck
+description: Check an open agentic website against the Worldwide Agentic Web MVP spec. Fails the job when a MUST rule fails.
+author: Tinkerer (Pratik Poddar)
+branding:
+  icon: check-circle
+  color: green
+inputs:
+  url:
+    description: Site URL, network URL (site base + network name) or manifest URL to check.
+    required: true
+  origin:
+    description: Optional caller origin to check CORS for.
+    required: false
+    default: ""
+  strict:
+    description: Also fail on warnings (true/false).
+    required: false
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - shell: bash
+      run: |
+        ARGS=("${{ inputs.url }}")
+        if [ -n "${{ inputs.origin }}" ]; then ARGS+=(--origin "${{ inputs.origin }}"); fi
+        if [ "${{ inputs.strict }}" = "true" ]; then ARGS+=(--strict); fi
+        node "${{ github.action_path }}/cli/agentcheck.mjs" "${ARGS[@]}"

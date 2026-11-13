@@ -1,0 +1,22 @@
+/agent-manifest.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json; charset=utf-8
+/agentcheck.network.json
+  Access-Control-Allow-Origin: *
+/links.json
+  Access-Control-Allow-Origin: *
+/agent-mcp.json
+  Access-Control-Allow-Origin: *
+/.well-known/*
+  Access-Control-Allow-Origin: *
+/directory.json
+  Access-Control-Allow-Origin: *
+/bridge/*
+  Access-Control-Allow-Origin: *
+/runtime/*
+  Access-Control-Allow-Origin: *
+/runtime/sandbox-worker.js
+  Content-Security-Policy: default-src 'none'; script-src blob:; connect-src 'none'; worker-src 'none'
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

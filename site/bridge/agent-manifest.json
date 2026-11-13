@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "agentcheck"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

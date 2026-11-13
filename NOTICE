@@ -1,0 +1,7 @@
+AgentCheck
+Copyright 2026 Tinkerer (Pratik Poddar)
+
+This product includes software from cognizant-ai-labs/agentic-web (Apache License 2.0):
+- site/runtime/ : the agentify-website skill's browser runtime (a patched copy of
+  cognizant-ai-lab/nsdeploy's runtime), copied unchanged at agentic-web commit 21b77cb.
+- scripts/build_network.mjs and templates/network.hocon : from the agentify-website skill.
