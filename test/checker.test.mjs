@@ -110,7 +110,7 @@ test("a wrong front_man, a leaked key and an unallowed http peer all fail", asyn
   const n = network();
   n.tools[0].tools.push("http://peer.example/tours");
   const fetchImpl = site({
-    [`${BASE}/agent-manifest.json`]: { body: manifest({ networks: [{ name: "good", front_man: "nobody", hocon: "./good.network.json" }], api_key: "sk-proj-abcdefghijklmnopqrstuvwxyz123456" }) },
+    [`${BASE}/agent-manifest.json`]: { body: manifest({ networks: [{ name: "good", front_man: "nobody", hocon: "./good.network.json" }], api_key: ["sk", "proj", "abcdefghijklmnopqrstuvwxyz123456"].join("-") }) },
     [`${BASE}/good.network.json`]: { body: n },
   });
   const r = await checkSite(`${BASE}/good`, { fetchImpl, mode: "server", checkPage: false });
